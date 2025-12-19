@@ -13,7 +13,512 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QStackedWidget" name="stackedWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>801</width>
+      <height>571</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>4</number>
+    </property>
+    <widget class="QWidget" name="page">
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>70</y>
+        <width>441</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Serif</family>
+        <pointsize>21</pointsize>
+        <italic>true</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Домошная аудио библиотека</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>220</y>
+        <width>221</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>1. Войти                                  </string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_2">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>280</y>
+        <width>221</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>2. Создать учетную запись</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_3">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>340</y>
+        <width>221</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>3. Выйти                                </string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_2">
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>300</x>
+        <y>100</y>
+        <width>151</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Serif</family>
+        <pointsize>43</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Вход</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>280</y>
+        <width>171</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>13</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>имя пользователя: </string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>320</y>
+        <width>70</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>13</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Пароль : </string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="editLogin">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>280</y>
+        <width>261</width>
+        <height>27</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="editPassword">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>330</y>
+        <width>261</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="echoMode">
+       <enum>QLineEdit::EchoMode::Password</enum>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="sign_in">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>430</y>
+        <width>121</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Войти</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_5">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>96</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Назад</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_3">
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>60</y>
+        <width>501</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Serif</family>
+        <pointsize>26</pointsize>
+        <italic>true</italic>
+       </font>
+      </property>
+      <property name="text">
+       <string>Создание учетной записи</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_6">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>240</y>
+        <width>91</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>User name: </string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_7">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>300</y>
+        <width>70</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Email:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_8">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>360</y>
+        <width>81</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Password:</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit">
+      <property name="geometry">
+       <rect>
+        <x>202</x>
+        <y>240</y>
+        <width>331</width>
+        <height>27</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_2">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>300</y>
+        <width>331</width>
+        <height>27</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_3">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>360</y>
+        <width>331</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="echoMode">
+       <enum>QLineEdit::EchoMode::Password</enum>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_6">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>460</y>
+        <width>96</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Создать</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_7">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>96</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Назад</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_4">
+     <widget class="QLabel" name="label_9">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>50</y>
+        <width>311</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Serif</family>
+        <pointsize>23</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Аудио библиотека</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_4">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>150</y>
+        <width>201</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>1. Песни</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_8">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>200</y>
+        <width>201</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>2. Смотреть артистов</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_9">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>250</y>
+        <width>201</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>3. Альбум</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_10">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>300</y>
+        <width>201</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>4. Плаулист</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_11">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>350</y>
+        <width>201</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Выйти</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_5">
+     <widget class="QPushButton" name="pushButton_12">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>150</y>
+        <width>301</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>1. Просмотреть список песен</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_13">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>200</y>
+        <width>301</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>2. Добавить песню                </string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_14">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>250</y>
+        <width>301</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>3. Удалить песню</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_15">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>300</y>
+        <width>301</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>4. Поставить лайк песне</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_16">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>350</y>
+        <width>301</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>5. Просмотреть понравившиеся песни</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_17">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>400</y>
+        <width>301</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>6. Найти песню</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="return_to_main">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>450</y>
+        <width>301</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>7. Вернуться в главное меню</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_10">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>50</y>
+        <width>411</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Source Code Pro</family>
+        <pointsize>32</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Управление песен</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>

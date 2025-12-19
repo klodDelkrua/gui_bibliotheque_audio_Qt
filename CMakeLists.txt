@@ -6,20 +6,36 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# --- CONFIGURATION POSTGRESQL FORCÉE ---
+# Sur Fedora, libpqxx est dans /usr/include et les libs dans /usr/lib64
+set(PQXX_INCLUDE_DIRS "/usr/include")
+set(PQXX_LIBRARY_DIRS "/usr/lib64")
+set(PQXX_LIBRARIES "pqxx")
+
+# Indique au linker où trouver le fichier libpqxx.so
+link_directories(${PQXX_LIBRARY_DIRS})
+# ------------------------------------------
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
 
-set(TS_FILES bibliotheque_audio_en_US.ts)
+set(TS_FILES bibliotheque_audio_ru_RU.ts)
 
+# Liste complète des sources
 set(PROJECT_SOURCES
         main.cpp
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
-        ${TS_FILES}
+        audio_player.h
+        audio_player.cpp
+        authManager.h
+        authManager.cpp
+        user_account.h
+        user_account.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -27,49 +43,19 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
     )
-# Define target properties for Android with Qt 6 as:
-#    set_property(TARGET bibliotheque_audio APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
-#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
-# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
-
-    qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 else()
-    if(ANDROID)
-        add_library(bibliotheque_audio SHARED
-            ${PROJECT_SOURCES}
-        )
-# Define properties for Android with Qt 5 after find_package() calls as:
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
-    else()
-        add_executable(bibliotheque_audio
-            ${PROJECT_SOURCES}
-        )
-    endif()
-
-    qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
+    add_executable(bibliotheque_audio
+        ${PROJECT_SOURCES}
+    )
 endif()
 
-target_link_libraries(bibliotheque_audio PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+# --- CONFIGURATION DES INCLUDES (APRES LA CREATION DE LA CIBLE) ---
+# On force l'inclusion de /usr/include spécifiquement pour notre projet
+target_include_directories(bibliotheque_audio PRIVATE ${PQXX_INCLUDE_DIRS})
 
-# Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
-# If you are developing for iOS or macOS you should consider setting an
-# explicit, fixed bundle identifier manually though.
-if(${QT_VERSION} VERSION_LESS 6.1.0)
-  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.bibliotheque_audio)
-endif()
-set_target_properties(bibliotheque_audio PROPERTIES
-    ${BUNDLE_ID_OPTION}
-    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-    MACOSX_BUNDLE TRUE
-    WIN32_EXECUTABLE TRUE
-)
-
-include(GNUInstallDirs)
-install(TARGETS bibliotheque_audio
-    BUNDLE DESTINATION .
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+target_link_libraries(bibliotheque_audio PRIVATE
+    Qt${QT_VERSION_MAJOR}::Widgets
+    ${PQXX_LIBRARIES}
 )
 
 if(QT_VERSION_MAJOR EQUAL 6)
