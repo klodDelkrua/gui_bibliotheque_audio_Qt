@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "authManager.h"
+#include "audio_player.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -14,25 +16,26 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    // On change la signature pour accepter le pointeur vers AuthManager
+    explicit MainWindow(QWidget *parent = nullptr, AuthManager* auth = nullptr);
     ~MainWindow();
 
 private slots:
+    // Tes slots existants (on ne les change pas)
     void on_pushButton_clicked();
-
     void on_pushButton_2_clicked();
-
     void on_pushButton_5_clicked();
-
     void on_pushButton_7_clicked();
-
+    void on_return_to_main_clicked();
+    void on_pushButton_11_clicked();
     void on_pushButton_4_clicked();
-
     void on_sign_in_clicked();
 
-    void on_return_to_main_clicked();
+    void on_pushButton_6_clicked();
 
 private:
     Ui::MainWindow *ui;
+    // C'est ici que le pointeur sera stocké après avoir été reçu du main
+    AuthManager* authService;
 };
 #endif // MAINWINDOW_H
