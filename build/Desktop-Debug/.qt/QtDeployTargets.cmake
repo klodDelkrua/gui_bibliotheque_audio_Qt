@@ -1,2 +1,0 @@
-set(__QT_DEPLOY_TARGET_bibliotheque_audio_FILE /home/lcdelcroix/Documents/QT/bibliotheque_audio/build/Desktop-Debug/bibliotheque_audio)
-set(__QT_DEPLOY_TARGET_bibliotheque_audio_TYPE EXECUTABLE)
