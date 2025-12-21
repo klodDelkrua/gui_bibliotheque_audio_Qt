@@ -61,3 +61,7 @@ const UserAccount & AuthManager::get_current_user() const {
     }
     return *current_user;
 }
+
+AudioPlayer& AuthManager::get_player(){
+    return player;
+}

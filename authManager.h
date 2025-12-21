@@ -21,6 +21,7 @@ public:
     void logout();
     bool is_logged_in() const;
     [[nodiscard]] const UserAccount& get_current_user() const;
+    AudioPlayer& get_player();
 };
 
 #endif // AUTHMANAGER_H

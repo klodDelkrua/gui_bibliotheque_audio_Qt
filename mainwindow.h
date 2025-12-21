@@ -3,8 +3,15 @@
 
 #include <QMainWindow>
 #include "authManager.h"
-#include "audio_player.h"
-
+#include <QMessageBox>
+#include <QString>
+#include <QDebug>
+#include <QLineEdit>
+#include <QInputDialog>
+#include <QComboBox>
+#include <QSpinBox>
+#include <QTableWidget>
+#include <QHeaderView>
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -32,6 +39,12 @@ private slots:
     void on_sign_in_clicked();
 
     void on_pushButton_6_clicked();
+
+    void on_pushButton_18_clicked();
+    void setupTableSongs();
+    void displaySongsPage();
+    void on_seeListSongs_clicked();
+
 
 private:
     Ui::MainWindow *ui;

@@ -1,10 +1,12 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include "authManager.h"
+#include "audio_player.h"
 #include <QMessageBox>
 #include <QString>
 #include <QDebug>
 #include <QLineEdit>
+#include <QInputDialog>
 
 MainWindow::MainWindow(QWidget *parent, AuthManager *auth)
     : QMainWindow(parent)
@@ -12,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent, AuthManager *auth)
     , authService(auth) // On affecte le pointeur reçu au membre de la classe
 {
     ui->setupUi(this);
+    setupTableSongs();
 
     // On vérifie quand même par sécurité
     if (!authService) {
@@ -104,3 +107,64 @@ void MainWindow::on_pushButton_6_clicked()
     }
 }
 
+
+void MainWindow::on_pushButton_18_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(4);
+}
+
+
+void MainWindow::setupTableSongs() {
+    ui->tableSongs->setColumnCount(3);
+    ui->tableSongs->setHorizontalHeaderLabels({"Titre", "Artiste ID", "Durée"});
+
+    // 1. Étirer les colonnes pour prendre toute la place
+    ui->tableSongs->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+    // 2. Cacher les numéros de ligne à gauche (les 1, 2, 3...)
+    ui->tableSongs->verticalHeader()->setVisible(false);
+
+    // 3. Rendre le tableau non-modifiable (lecture seule)
+    ui->tableSongs->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+    // 4. Sélectionner toute la ligne lors d'un clic
+    ui->tableSongs->setSelectionBehavior(QAbstractItemView::SelectRows);
+}
+
+void MainWindow::displaySongsPage() {
+    // 1. On vide le tableau
+    ui->tableSongs->setRowCount(0);
+
+    // 2. Récupération des données via ton AudioPlayer
+    AudioPlayer& player = authService->get_player();
+    std::vector<Song> songs = player.get_all_songs();
+
+    // 3. Remplissage ligne par ligne
+    for (int i = 0; i < songs.size(); ++i) {
+        ui->tableSongs->insertRow(i);
+
+        // Colonne Titre
+        ui->tableSongs->setItem(i, 0, new QTableWidgetItem(QString::fromStdString(songs[i].get_title())));
+
+        // Colonne Artiste ID
+        ui->tableSongs->setItem(i, 1, new QTableWidgetItem(QString::number(songs[i].get_artist_id())));
+
+        // Colonne Durée
+        ui->tableSongs->setItem(i, 2, new QTableWidgetItem(QString::number(songs[i].get_duration())));
+        int totalSeconds = songs[i].get_duration();
+        int minutes = totalSeconds / 60;
+        int seconds = totalSeconds % 60;
+        QString timeStr = QString("%1:%2").arg(minutes).arg(seconds, 2, 10, QChar('0'));
+        ui->tableSongs->setItem(i, 2, new QTableWidgetItem(timeStr));
+    }
+
+    // 4. Changer de page (remplace INDEX_PAGE_SONGS par le numéro de ta nouvelle page)
+    ui->stackedWidget->setCurrentIndex(5);
+}
+
+void MainWindow::on_seeListSongs_clicked()
+{
+    displaySongsPage();
+}
+
+//charger les artists
