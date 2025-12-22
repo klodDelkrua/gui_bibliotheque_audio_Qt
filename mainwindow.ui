@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>823</width>
+    <height>644</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>4</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="page">
      <widget class="QLabel" name="label">
@@ -434,7 +434,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>1. Просмотреть список песен</string>
+       <string>Просмотреть список песен</string>
       </property>
      </widget>
      <widget class="QPushButton" name="btnAddSong">
@@ -447,7 +447,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>2. Добавить песню                </string>
+       <string>Добавить песню                </string>
       </property>
      </widget>
      <widget class="QPushButton" name="btnLikedSong">
@@ -465,10 +465,10 @@
        </font>
       </property>
       <property name="text">
-       <string>5. Просмотреть понравившиеся песни</string>
+       <string>Просмотреть понравившиеся песни</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_17">
+     <widget class="QPushButton" name="return_to_main">
       <property name="geometry">
        <rect>
         <x>250</x>
@@ -478,20 +478,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>6. Найти песню</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="return_to_main">
-      <property name="geometry">
-       <rect>
-        <x>250</x>
-        <y>320</y>
-        <width>301</width>
-        <height>27</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>7. Вернуться в главное меню</string>
+       <string>Вернуться в главное меню</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_10">
@@ -518,10 +505,10 @@
      <widget class="QTableWidget" name="tableSongs">
       <property name="geometry">
        <rect>
-        <x>130</x>
-        <y>20</y>
+        <x>140</x>
+        <y>60</y>
         <width>651</width>
-        <height>541</height>
+        <height>511</height>
        </rect>
       </property>
      </widget>
@@ -562,6 +549,42 @@
       </property>
       <property name="text">
        <string>Лайк</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="inputSearch">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>10</y>
+        <width>351</width>
+        <height>27</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnSearch">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>10</y>
+        <width>96</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Поиск</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelStats">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>40</y>
+        <width>371</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Поиск завершен за X мс</string>
       </property>
      </widget>
     </widget>
@@ -719,7 +742,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>823</width>
      <height>24</height>
     </rect>
    </property>

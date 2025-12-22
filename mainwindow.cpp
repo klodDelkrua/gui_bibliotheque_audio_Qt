@@ -8,6 +8,7 @@
 #include <QDebug>
 #include <QLineEdit>
 #include <QInputDialog>
+#include <set>
 
 MainWindow::MainWindow(QWidget *parent, AuthManager *auth)
     : QMainWindow(parent)
@@ -16,6 +17,8 @@ MainWindow::MainWindow(QWidget *parent, AuthManager *auth)
 {
     ui->setupUi(this);
     setupTableSongs();
+    // Dans le constructeur de MainWindow
+    connect(ui->inputSearch, &QLineEdit::textChanged, this, &MainWindow::on_btnSearch_clicked);
 
     // On vérifie quand même par sécurité
     if (!authService) {
@@ -129,34 +132,49 @@ void MainWindow::displaySongsPage(bool showOnlyFavorites) {
     ui->tableSongs->setRowCount(0);
 
     AudioPlayer& player = authService->get_player();
-    std::vector<Song> songs;
+    int userId = authService->get_current_user().get_id();
 
-    // --- LOGIQUE DE SÉLECTION DU MODE ---
+    // 1. Récupérer les chansons selon le mode choisi
+    std::vector<Song> songsToDisplay;
     if (showOnlyFavorites) {
-        int userId = authService->get_current_user().get_id();
-        songs = player.get_liked_songs(userId); // Ta méthode console
+        songsToDisplay = player.get_liked_songs(userId);
     } else {
-        songs = player.get_all_songs();
+        songsToDisplay = player.get_all_songs();
     }
 
-    ui->tableSongs->setRowCount(songs.size());
+    // 2. Récupérer la liste des favoris de l'utilisateur pour pouvoir comparer
+    // On utilise un std::set pour que la recherche d'ID soit instantanée
+    std::vector<Song> likedSongs = player.get_liked_songs(userId);
+    std::set<int> likedIds;
+    for(const auto& s : likedSongs) {
+        likedIds.insert(s.get_id());
+    }
 
-    for (int i = 0; i < (int)songs.size(); ++i) {
+    ui->tableSongs->setRowCount(songsToDisplay.size());
+
+    for (int i = 0; i < (int)songsToDisplay.size(); ++i) {
+        int songId = songsToDisplay[i].get_id();
+
         // Colonne 0 : Titre + ID caché
-        QTableWidgetItem* titleItem = new QTableWidgetItem(QString::fromStdString(songs[i].get_title()));
-        titleItem->setData(Qt::UserRole, songs[i].get_id());
+        QTableWidgetItem* titleItem = new QTableWidgetItem(QString::fromStdString(songsToDisplay[i].get_title()));
+        titleItem->setData(Qt::UserRole, songId);
         ui->tableSongs->setItem(i, 0, titleItem);
 
         // Colonne 1 : Artiste
-        ui->tableSongs->setItem(i, 1, new QTableWidgetItem(QString::number(songs[i].get_artist_id())));
+        ui->tableSongs->setItem(i, 1, new QTableWidgetItem(QString::number(songsToDisplay[i].get_artist_id())));
 
         // Colonne 2 : Durée
-        int totalSeconds = songs[i].get_duration();
+        int totalSeconds = songsToDisplay[i].get_duration();
         QString timeStr = QString("%1:%2").arg(totalSeconds / 60).arg(totalSeconds % 60, 2, 10, QChar('0'));
         ui->tableSongs->setItem(i, 2, new QTableWidgetItem(timeStr));
 
-        // Colonne 3 : Favoris (On affiche un coeur si on est en mode favoris)
-        ui->tableSongs->setItem(i, 3, new QTableWidgetItem(showOnlyFavorites ? "❤️" : ""));
+        // --- LA NUANCE EST ICI ---
+        // Si l'ID de la chanson est dans notre liste d'IDs aimés, on met un coeur
+        if (likedIds.count(songId)) {
+            ui->tableSongs->setItem(i, 3, new QTableWidgetItem("❤️"));
+        } else {
+            ui->tableSongs->setItem(i, 3, new QTableWidgetItem(""));
+        }
     }
 
     ui->tableSongs->setUpdatesEnabled(true);
@@ -283,5 +301,63 @@ void MainWindow::on_btnLikeSong_clicked()
 void MainWindow::on_btnLikedSong_clicked()
 {
     displaySongsPage(true);
+}
+
+
+void MainWindow::on_btnSearch_clicked()
+{
+    QString query = ui->inputSearch->text().trimmed();
+
+    if (query.isEmpty()) {
+        displaySongsPage(false); // Réafficher tout si le champ est vide
+        ui->labelStats->clear();
+        return;
+    }
+
+    // --- CHRONOMÈTRE (Côté Interface) ---
+    auto start = std::chrono::high_resolution_clock::now();
+
+    AudioPlayer& player = authService->get_player();
+    int userId = authService->get_current_user().get_id();
+
+    // 1. Appel de ta méthode console adaptée
+    std::vector<Song> results = player.search_song_by_title(query.toStdString());
+
+    // 2. Récupération des favoris pour garder les cœurs ❤️
+    std::vector<Song> likedSongs = player.get_liked_songs(userId);
+    std::set<int> likedIds;
+    for(const auto& s : likedSongs) likedIds.insert(s.get_id());
+
+    // 3. Mise à jour du tableau
+    ui->tableSongs->setUpdatesEnabled(false);
+    ui->tableSongs->setRowCount(0);
+    ui->tableSongs->setRowCount(results.size());
+
+    for (int i = 0; i < (int)results.size(); ++i) {
+        int songId = results[i].get_id();
+
+        ui->tableSongs->setItem(i, 0, new QTableWidgetItem(QString::fromStdString(results[i].get_title())));
+        ui->tableSongs->item(i, 0)->setData(Qt::UserRole, songId);
+        ui->tableSongs->setItem(i, 1, new QTableWidgetItem(QString::number(results[i].get_artist_id())));
+
+        int secs = results[i].get_duration();
+        ui->tableSongs->setItem(i, 2, new QTableWidgetItem(QString("%1:%2").arg(secs/60).arg(secs%60, 2, 10, QChar('0'))));
+
+        // Affichage du cœur si la chanson est dans les favoris
+        ui->tableSongs->setItem(i, 3, new QTableWidgetItem(likedIds.count(songId) ? "❤️" : ""));
+    }
+    ui->tableSongs->setUpdatesEnabled(true);
+
+    // --- FIN DU CHRONOMÈTRE ---
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double, std::milli> elapsed = end - start;
+
+    // 4. Affichage des statistiques dans l'interface
+    ui->labelStats->setText(QString("🔍 %1 нашли результат за %2 ms")
+                                .arg(results.size())
+                                .arg(elapsed.count(), 0, 'f', 2));
+
+    // On s'assure d'être sur la page du tableau
+    ui->stackedWidget->setCurrentIndex(5);
 }
 

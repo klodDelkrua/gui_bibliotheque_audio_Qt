@@ -61,6 +61,8 @@ private slots:
 
     void on_btnLikedSong_clicked();
 
+    void on_btnSearch_clicked();
+
 private:
     Ui::MainWindow *ui;
     // C'est ici que le pointeur sera stocké après avoir été reçu du main
