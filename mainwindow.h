@@ -42,9 +42,24 @@ private slots:
 
     void on_pushButton_18_clicked();
     void setupTableSongs();
-    void displaySongsPage();
+    // Ajoute un paramètre optionnel "showOnlyFavorites"
+    void displaySongsPage(bool showOnlyFavorites = false);
     void on_seeListSongs_clicked();
+    void loadArtistsIntoCombo();
 
+    void on_btnAddSong_clicked();
+
+    void on_btnSaveSong_clicked();
+
+    void on_btnAddArtist_clicked();
+
+    void on_pushButton_12_clicked();
+
+    void on_btnDeleteSong_clicked();
+
+    void on_btnLikeSong_clicked();
+
+    void on_btnLikedSong_clicked();
 
 private:
     Ui::MainWindow *ui;
