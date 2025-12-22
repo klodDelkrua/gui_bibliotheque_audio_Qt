@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>7</number>
     </property>
     <widget class="QWidget" name="page">
      <widget class="QLabel" name="label">
@@ -367,10 +367,10 @@
        </rect>
       </property>
       <property name="text">
-       <string>1. Песни</string>
+       <string>Песни</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_8">
+     <widget class="QPushButton" name="btnViewArtists">
       <property name="geometry">
        <rect>
         <x>280</x>
@@ -380,10 +380,10 @@
        </rect>
       </property>
       <property name="text">
-       <string>2. Смотреть артистов</string>
+       <string>Смотреть артистов</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_9">
+     <widget class="QPushButton" name="btnAlbum">
       <property name="geometry">
        <rect>
         <x>280</x>
@@ -393,10 +393,10 @@
        </rect>
       </property>
       <property name="text">
-       <string>3. Альбум</string>
+       <string>Альбум</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_10">
+     <widget class="QPushButton" name="btnPlaylist">
       <property name="geometry">
        <rect>
         <x>280</x>
@@ -406,7 +406,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>4. Плаулист</string>
+       <string>Плаулист</string>
       </property>
      </widget>
      <widget class="QPushButton" name="pushButton_11">
@@ -732,6 +732,83 @@
       </property>
       <property name="text">
        <string>Назад</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_8">
+     <widget class="QPushButton" name="pushButton_8">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>20</y>
+        <width>96</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Назад</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_13">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>60</y>
+        <width>96</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Лайк</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_14">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>100</y>
+        <width>96</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Добавить</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_15">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>140</y>
+        <width>96</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Удалить</string>
+      </property>
+     </widget>
+     <widget class="QTableWidget" name="tableCollections">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>60</y>
+        <width>651</width>
+        <height>511</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelCollectionTitle">
+      <property name="geometry">
+       <rect>
+        <x>390</x>
+        <y>10</y>
+        <width>70</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
       </property>
      </widget>
     </widget>

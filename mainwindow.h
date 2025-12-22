@@ -63,6 +63,22 @@ private slots:
 
     void on_btnSearch_clicked();
 
+    void on_btnViewArtists_clicked();
+
+    void displayArtistsPage();
+
+    void setupSongsTableHeaders();
+
+    void setupArtistsTableHeaders();
+
+    void displayCollectionsPage(bool isAlbumMode);
+
+    void on_pushButton_8_clicked();
+
+    void on_btnAlbum_clicked();
+
+    void on_btnPlaylist_clicked();
+
 private:
     Ui::MainWindow *ui;
     // C'est ici que le pointeur sera stocké après avoir été reçu du main

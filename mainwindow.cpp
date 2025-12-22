@@ -111,6 +111,23 @@ void MainWindow::on_pushButton_6_clicked()
     }
 }
 
+void MainWindow::setupSongsTableHeaders() {
+    ui->tableSongs->setColumnCount(4);
+    ui->tableSongs->setHorizontalHeaderLabels({"Titre", "Artiste", "Durée", "Favoris"});
+    ui->tableSongs->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    // On réactive les boutons de gestion des chansons
+    ui->btnDeleteSong->setVisible(true);
+    ui->btnLikeSong->setVisible(true);
+}
+
+void MainWindow::setupArtistsTableHeaders() {
+    ui->tableSongs->setColumnCount(2);
+    ui->tableSongs->setHorizontalHeaderLabels({"ID", "Nom de l'Artiste"});
+    ui->tableSongs->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    // On cache les boutons qui ne servent qu'aux chansons
+    ui->btnDeleteSong->setVisible(false);
+    ui->btnLikeSong->setVisible(false);
+}
 
 void MainWindow::on_pushButton_18_clicked()
 {
@@ -129,6 +146,7 @@ void MainWindow::setupTableSongs() {
 
 void MainWindow::displaySongsPage(bool showOnlyFavorites) {
     ui->tableSongs->setUpdatesEnabled(false);
+    setupSongsTableHeaders();
     ui->tableSongs->setRowCount(0);
 
     AudioPlayer& player = authService->get_player();
@@ -359,5 +377,98 @@ void MainWindow::on_btnSearch_clicked()
 
     // On s'assure d'être sur la page du tableau
     ui->stackedWidget->setCurrentIndex(5);
+}
+
+void MainWindow::displayArtistsPage() {
+    ui->tableSongs->setUpdatesEnabled(false);
+    setupArtistsTableHeaders();
+
+    // 1. On reconfigure le tableau pour le mode "Artistes"
+    ui->tableSongs->setColumnCount(2);
+    ui->tableSongs->setHorizontalHeaderLabels({"ID", "Nom de l'Artiste"});
+    ui->tableSongs->setRowCount(0);
+    ui->tableSongs->verticalHeader()->setVisible(false);
+
+    // 2. Récupération des données
+    AudioPlayer& player = authService->get_player();
+    std::vector<Artist> artists = player.get_all_artists();
+
+    ui->tableSongs->setRowCount(artists.size());
+
+    // 3. Remplissage
+    for (int i = 0; i < (int)artists.size(); ++i) {
+        // Colonne 0 : ID
+        ui->tableSongs->setItem(i, 0, new QTableWidgetItem(QString::number(artists[i].get_id())));
+
+        // Colonne 1 : Nom
+        ui->tableSongs->setItem(i, 1, new QTableWidgetItem(QString::fromStdString(artists[i].get_name())));
+    }
+
+    ui->tableSongs->setUpdatesEnabled(true);
+
+    // 4. On bascule sur la page qui contient le tableau
+    ui->stackedWidget->setCurrentIndex(5);
+}
+
+void MainWindow::on_btnViewArtists_clicked()
+{
+    displayArtistsPage();
+}
+
+
+//la gestion des albums et des playlists
+void MainWindow::displayCollectionsPage(bool isAlbumMode) {
+    ui->tableCollections->setUpdatesEnabled(false);
+    ui->tableCollections->setRowCount(0);
+    ui->tableCollections->setColumnCount(2);
+
+    // Configuration dynamique des titres
+    if (isAlbumMode) {
+        ui->labelCollectionTitle->setText("Liste des Albums");
+        ui->tableCollections->setHorizontalHeaderLabels({"ID", "Nom de l'Album"});
+    } else {
+        ui->labelCollectionTitle->setText("Mes Playlists");
+        ui->tableCollections->setHorizontalHeaderLabels({"ID", "Nom de la Playlist"});
+    }
+
+    AudioPlayer& player = authService->get_player();
+
+    if (isAlbumMode) {
+        std::vector<Album> albums = player.get_all_albums();
+        ui->tableCollections->setRowCount(albums.size());
+        for (int i = 0; i < albums.size(); ++i) {
+            ui->tableCollections->setItem(i, 0, new QTableWidgetItem(QString::number(albums[i].get_id())));
+            ui->tableCollections->setItem(i, 1, new QTableWidgetItem(QString::fromStdString(albums[i].get_name())));
+        }
+    } else {
+        int userId = authService->get_current_user().get_id();
+        std::vector<Playlist> playlists = player.get_playlist_by_user(userId);
+        ui->tableCollections->setRowCount(playlists.size());
+        for (int i = 0; i < playlists.size(); ++i) {
+            ui->tableCollections->setItem(i, 0, new QTableWidgetItem(QString::number(playlists[i].get_id())));
+            ui->tableCollections->setItem(i, 1, new QTableWidgetItem(QString::fromStdString(playlists[i].get_name())));
+        }
+    }
+
+    ui->tableCollections->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tableCollections->setUpdatesEnabled(true);
+    ui->stackedWidget->setCurrentIndex(7); // Ta nouvelle page
+}
+
+void MainWindow::on_pushButton_8_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(3);
+}
+
+
+void MainWindow::on_btnAlbum_clicked()
+{
+    displayCollectionsPage(true);
+}
+
+
+void MainWindow::on_btnPlaylist_clicked()
+{
+    displayCollectionsPage(false);
 }
 
